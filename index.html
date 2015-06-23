@@ -4,13 +4,15 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Untitled</title>
+        <title>Search Engine for Legislature</title>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="author" href="humans.txt">
     </head>
     <body ng-controller = "mainCtrl">
+        <form ng-hidden ="hidden">
         <input type="text" ng-model = "zip">
-        <button ng-click = "search()"> Click it, mother fucker</button>
+        <button ng-click = "search()"> Click it</button>
+        </form>
 
         <div class="info">
             <table width= "100%">
