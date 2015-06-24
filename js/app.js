@@ -1,12 +1,17 @@
 var app = angular.module('app', []);
 
-app.controller('mainCtrl', ['$scope', function($scope){
+app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.test = 'test';
 	$scope.hidden = false;
+	$('.money').hide();
 
 	$scope.search = function(){
 		$scope.hidden = true;
 		var id;
+		var lasties;
+		var firsties;
+		var total = []
+		$scope.total = total[0];
 		$('.name').html('');
 		console.log($scope.zip);
 		$.getJSON("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+$scope.zip+"&apikey=8b48c930d6bb4552be3b0e6248efb463").then(function (json){
@@ -39,8 +44,19 @@ app.controller('mainCtrl', ['$scope', function($scope){
 								}
 							}
 						})
-						$.getJSON('http://transparencydata.com/api/1.0/entities/id_lookup.json?bioguide_id=M001157&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
-							console.log(json[0].id);
+						//&callback=?
+						$.getJSON('http://transparencydata.com/api/1.0/entities.json?search='+firsties+'+'+lasties+'&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+							$('.money').show();
+							var newID = json[0].id;
+							console.log(newID);
+							var total = json[0].total_received;
+							$scope.total = total;
+							var totalP = json[0].count_received;
+							console.log($scope.total);
+							$('.totalP').html(totalP);
+							$timeout(function() { 
+								total.push(json[0].total_received);
+							}, 2000);
 							})
 					})
 
@@ -49,6 +65,6 @@ app.controller('mainCtrl', ['$scope', function($scope){
 			}
 		}
 	})
-	}
+}
 
 }])

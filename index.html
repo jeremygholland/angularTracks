@@ -10,11 +10,15 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body ng-controller = "mainCtrl">
+        <div class="container">
+            <div class="row">
         <form ng-hidden ="hidden">
         <input type="text" ng-model = "zip">
         <button ng-click = "search()"> Click it</button>
         </form>
-
+            </div>
+        <div class="row">
+            <div class="col-md-6">
         <div class="info">
             <table width= "100%">
                 <tbody>
@@ -23,8 +27,21 @@
                     <tr class = "committees"></tr>
                 </tbody>
             </table>
+
         </div>
-        
+        </div>
+        <div class="col-md-6">
+            <div class="money">
+                <div>
+                    <p> This congress person recieved {{total | currency}} dollars in the 2012 campaign cycle.</p>
+                </div>
+                <div>
+                    <p> <span class="totalP"></span> people gave this congressmen this amount of money.</p>
+                </div>                
+            </div>
+        </div>
+        </div>
+        </div>
 
 
 
