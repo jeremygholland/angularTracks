@@ -6,6 +6,7 @@ app.controller('mainCtrl', ['$scope', function($scope){
 
 	$scope.search = function(){
 		$scope.hidden = true;
+		var id;
 		$('.name').html('');
 		console.log($scope.zip);
 		$.getJSON("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+$scope.zip+"&apikey=8b48c930d6bb4552be3b0e6248efb463").then(function (json){
@@ -25,6 +26,7 @@ app.controller('mainCtrl', ['$scope', function($scope){
 						var party = json.results[0].party;
 						var id = json.results[0].bioguide_id;
 						var contact = json.results[0].contact_form;
+						console.log(id);
 						$('.name').html("<h2> <a href ="+contact+">" + firsties +" "+ lasties + "("+party+")</a></h2>");
 						$.getJSON('http://congress.api.sunlightfoundation.com/bills?sponsor_id='+id +'&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 							for(j=0; j<json.results.length; j++){
@@ -37,6 +39,9 @@ app.controller('mainCtrl', ['$scope', function($scope){
 								}
 							}
 						})
+						$.getJSON('http://transparencydata.com/api/1.0/entities/id_lookup.json?bioguide_id=M001157&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+							console.log(json[0].id);
+							})
 					})
 
 				})
