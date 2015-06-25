@@ -2,6 +2,7 @@ var app = angular.module('app', []);
 
 app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.test = 'test';
+
 	$scope.hidden = false;
 	$('.money').hide();
 	$('.comitStuff').hide();
@@ -11,7 +12,13 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		var id;
 		var lasties;
 		var firsties;
+		var contribName = [];
+		var contribTotal = [];
 		var total = []
+		$scope.allOfIt = {
+		contribTotals : [],
+		contribNames : []
+		}
 		$scope.total = total[0];
 		$('.name').html('');
 		console.log($scope.zip);
@@ -56,23 +63,39 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 							$('.money').show();
 							var newID = json[0].id;
 							console.log(newID);
-							var totalNew = json[0].total_received;
-							$scope.total = totalNew;
 							var totalP = json[0].count_received;
-							console.log($scope.total);
 							$('.totalP').html(totalP);
 							//allows for angular currency filter to work
 							$timeout(function() { 
 								total.push(json[0].total_received);
 							}, 2000);
-						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors.json?cycle=2012&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors.json?cycle=2014&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 							for(y = 0; y<json.length; y++){
 								var contribName = json[y].name;
-								console.log(contribName);
 								var contribTotal = json[y].total_amount;
-								$('.topContributors').append('<ul>'+contribName+'<li>'+contribTotal+'</li> </ul>');
+							}
+							console.log(contribTotal);
+							$timeout(function() {
+								$scope.allOfIt.contribNames.push(contribName);
+								$scope.allOfIt.contribTotals.push(contribTotal);
+							}, 2000);
+							console.log($scope.allOfIt.contribTotals)
+						})
+
+						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors/industries.json?cycle=2014&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+							for(u = 0; u<json.length; u++){
+								var entityTotal = json[u].amount;
+								var entityType = json[u].name;
+								$scope.entityTotal = entityTotal
+								$('.entity').append('<ul>'+entityType+'<li>'+entityTotal+'</li></ul>');
 							}
 						})
+						$.getJSON('http://transparencydata.com/api/1.0/entities/'+newID+'.json?cycle=2014&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+								var hmm =json.totals['2014'].recipient_amount;
+								var hmmP = json.totals['2014'].recipient_count;
+								$scope.total = hmm;
+								$scope.hmmP = hmmP;
+							});
 					})
 					})
 				})

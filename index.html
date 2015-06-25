@@ -18,7 +18,7 @@
         </form>
             </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
         <div class="info">
             <table width= "100%">
                 <tbody>
@@ -34,20 +34,29 @@
 
         </div>
         </div>
-        <div class="col-md-6">
-            <div class="money">
+        <div class="money">
+        <div class="col-md-4">
                 <div>
-                    <p> This congress person recieved {{total | currency}} dollars in the 2012 campaign cycle.</p>
+                    <p> This congress person recieved {{total | currency}} dollars in the 2014 campaign cycle.</p>
                 </div>
                 <div>
-                    <p> <span class="totalP"></span> people gave this congressmen this amount of money.</p>
+                    <p> {{hmmP}} people gave this congressmen this amount of money.</p>
                 </div>
                 <div class="topContributors">
                     <h3>Top Contributors for 2012 cycle: </h3>
+                        <p>{{value}}</p>
+                        <ul ng-repeat = "value in allOfIt track by $index">
+                        <p>{{value.contribNames}} -- {{all.contribTitles}} </p> 
+                    </ul>
                     
-                </div>                
+                </div> 
+                 </div>
+                <div class="col-md-4">               
+                <div class="entity">
+                    <h3>Interesting Data</h3>
+                </div>
+                </div>
             </div>
-        </div>
         </div>
         </div>
 
