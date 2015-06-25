@@ -4,21 +4,23 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.test = 'test';
 
 	$scope.hidden = false;
+	$('.reset').hide();
 	$('.money').hide();
 	$('.comitStuff').hide();
 
 	$scope.search = function(){
+		$('.inputForm').hide();
 		$scope.hidden = true;
+		var entityTotal= [];
+		var entityType = [];
 		var id;
 		var lasties;
 		var firsties;
-		var contribName = [];
-		var contribTotal = [];
+		 contribNames = [];
+		var contribTotals= [];
 		var total = []
-		$scope.allOfIt = {
-		contribTotals : [],
-		contribNames : []
-		}
+		$scope.contribNames;
+		$scope.contribTotals;
 		$scope.total = total[0];
 		$('.name').html('');
 		console.log($scope.zip);
@@ -73,22 +75,21 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 							for(y = 0; y<json.length; y++){
 								var contribName = json[y].name;
 								var contribTotal = json[y].total_amount;
-							}
-							console.log(contribTotal);
-							$timeout(function() {
-								$scope.allOfIt.contribNames.push(contribName);
-								$scope.allOfIt.contribTotals.push(contribTotal);
-							}, 2000);
-							console.log($scope.allOfIt.contribTotals)
+								console.log(contribTotal);
+								contribTotals.push(contribTotal);
+								contribNames.push(contribName);
+								}
+								$scope.contribNames= contribNames;
+								$scope.contribTotals= contribTotals;
 						})
 
 						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors/industries.json?cycle=2014&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 							for(u = 0; u<json.length; u++){
-								var entityTotal = json[u].amount;
-								var entityType = json[u].name;
-								$scope.entityTotal = entityTotal
-								$('.entity').append('<ul>'+entityType+'<li>'+entityTotal+'</li></ul>');
+								entityTotal.push(json[u].amount);
+								 entityType.push(json[u].name);
 							}
+							$scope.entityType = entityType;
+							$scope.entityTotal = entityTotal;
 						})
 						$.getJSON('http://transparencydata.com/api/1.0/entities/'+newID+'.json?cycle=2014&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 								var hmm =json.totals['2014'].recipient_amount;
@@ -103,6 +104,43 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 			}
 		}
 	})
+$('.reset').show();
 }
+	$scope.reset = function(){
+		$scope.zip = '';
+		$('.inputForm').show();
+		$('.name').html('');
+		$('.bills').html('');
+		$('.mainCommittee').html('');
+		var firsties = '';
+		var lasties = '';
+		var party = '';
+		var id = '';
+		var contact = '';
+		var bills = ''; 
+		var shortTitle = '';
+		var link = '';
+		var committees= '';
+		var newID = '';
+		var totalP = '';
+		var entityTotal= [];
+		var entityType = [];
+		var id;
+		var lasties;
+		var firsties;
+		var contribNames = [];
+		var contribTotals= [];
+		var total = [];
+		var contribName = '';
+		var contribTotal = '';
+		$scope.entityType = '';
+		$scope.entityTotal = '';
+		$scope.contribNames= '';
+		$scope.contribTotals= '';
+		$scope.hmm ='';
+		$scope.hmmP = '';
+		$('.money').hide();
+
+	}
 
 }])
