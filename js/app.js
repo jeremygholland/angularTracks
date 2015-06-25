@@ -71,7 +71,7 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 							$timeout(function() { 
 								total.push(json[0].total_received);
 							}, 2000);
-						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors.json?cycle=2014&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors.json?cycle=2014&limit=40&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 							for(y = 0; y<json.length; y++){
 								var contribName = json[y].name;
 								var contribTotal = json[y].total_amount;
@@ -83,7 +83,7 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 								$scope.contribTotals= contribTotals;
 						})
 
-						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors/industries.json?cycle=2014&limit=10&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+						$.getJSON('http://transparencydata.com/api/1.0/aggregates/pol/'+newID+'/contributors/industries.json?cycle=2014&limit=30&callback=?&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
 							for(u = 0; u<json.length; u++){
 								entityTotal.push(json[u].amount);
 								 entityType.push(json[u].name);
