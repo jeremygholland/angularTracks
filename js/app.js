@@ -4,13 +4,16 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.test = 'test';
 
 	$scope.hidden = false;
+	$('.tabStuff').hide();
 	$('.reset').hide();
 	$('.money').hide();
 	$('.comitStuff').hide();
+	$('.bills').hide();
 
 	$scope.search = function(){
 		$('.inputForm').hide();
 		$scope.hidden = true;
+		$('.tabStuff').show();
 		var entityTotal= [];
 		var entityType = [];
 		var id;
@@ -45,6 +48,7 @@ app.controller('mainCtrl', ['$scope', '$timeout', function($scope, $timeout){
 						console.log(id);
 						$('.name').html("<h2> <a href ="+contact+">" + firsties +" "+ lasties + "("+party+"), "+state+"</a></h2>");
 						$.getJSON('http://congress.api.sunlightfoundation.com/bills?sponsor_id='+id +'&apikey=8b48c930d6bb4552be3b0e6248efb463').then(function (json){
+							$('.bills').show();
 							for(j=0; j<json.results.length; j++){
 								if(json.results[j].congress == '114'){
 								var bills = json.results[j].bill_id; 
@@ -140,6 +144,8 @@ $('.reset').show();
 		$scope.hmm ='';
 		$scope.hmmP = '';
 		$('.money').hide();
+		$('.tabStuff').hide();
+		$('.bills').hide();
 
 	}
 
